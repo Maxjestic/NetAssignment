@@ -1,41 +1,40 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerNetworkPoints : NetworkBehaviour
 {
-    private NetworkVariable<int> pointsVar = new(0);
+    private NetworkVariable<int> _pointsVar = new(0, NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Owner);
     public UnityAction<int> OnPointsChanged;
 
-    public int Points => pointsVar.Value;
+    public int Points => _pointsVar.Value;
 
+    public void CoinCollected()
+    {
+        if(IsOwner)
+        {
+            _pointsVar.Value += 1;
+        }
+    }
+    
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
 
-        pointsVar.OnValueChanged += OnPointsValueChanged;
+        _pointsVar.OnValueChanged += OnPointsValueChanged;
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
 
-        pointsVar.OnValueChanged -= OnPointsValueChanged;
+        _pointsVar.OnValueChanged -= OnPointsValueChanged;
     }
 
     private void OnPointsValueChanged( int previousValue, int newValue )
     {
         OnPointsChanged?.Invoke( newValue );
-    }
-
-    void Update()
-    {
-        if ( Input.GetKeyDown( KeyCode.J ) )
-        {
-            if ( IsOwner )
-            {
-                pointsVar.Value += 1;
-            }
-        }
     }
 }

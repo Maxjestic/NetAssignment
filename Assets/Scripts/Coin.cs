@@ -6,10 +6,13 @@ public class Coin : NetworkBehaviour
 {
     private void OnTriggerEnter( Collider other )
     {
-        if ( !other.TryGetComponent( out PlayerNetworkPoints playerNetworkPoints ) ) return;
+        if (!IsServer) return;
+
+        if ( !other.TryGetComponent( out PlayerNetworkPoints playerPoints ) ) return;
+
+        playerPoints.AddPoint();
         
-        playerNetworkPoints.CoinCollected();
-        DespawnCoinServerRpc();
+        GetComponent<NetworkObject>().Despawn();
     }
 
     [ServerRpc(RequireOwnership = false)]

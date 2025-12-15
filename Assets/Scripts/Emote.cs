@@ -8,35 +8,42 @@ public class Emote : NetworkBehaviour
     [SerializeField]
     private GameObject emotePrefab;
 
-    private bool hasEmote;
-    private GameObject emoteSpawned;
+    private bool _hasEmote;
+    private GameObject _spawnedEmote;
+
     private void Update()
     {
-        if ( Input.GetKeyDown( KeyCode.E ) )
+        if ( !Input.GetKeyDown( KeyCode.E ) ) return;
+
+        if ( IsOwner )
         {
-            if ( IsOwner )
-            {
-                SpawnEmoteServerRpc();
-            }
+            SpawnEmoteServerRpc();
         }
     }
 
     [ServerRpc( RequireOwnership = false )]
     private void SpawnEmoteServerRpc()
     {
-        if ( emotePrefab == null ) return;
+        if ( !emotePrefab ) return;
 
-        if ( hasEmote )
+        if ( _hasEmote )
         {
-            emoteSpawned.GetComponent<NetworkObject>().Despawn();
+            if ( _spawnedEmote != null )
+            {
+                _spawnedEmote.GetComponent<NetworkObject>().Despawn();
+            }
         }
         else
         {
             GameObject emote = Instantiate( emotePrefab, transform );
-            emote.GetComponent<NetworkObject>().Spawn();
-            emoteSpawned = emote;
+            
+            var netObj = emote.GetComponent<NetworkObject>();
+            netObj.Spawn();
+            netObj.TrySetParent( transform );
+
+            _spawnedEmote = emote;
         }
 
-        hasEmote = !hasEmote;
+        _hasEmote = !_hasEmote;
     }
 }

@@ -1,13 +1,16 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField]
     private float movementSpeed = 5f;
 
     private PlayerInputActions _playerInputActions;
     private Rigidbody _playerRigidbody;
+
+    private Vector2 _inputVector;
 
     private void Awake()
     {
@@ -17,17 +20,26 @@ public class PlayerMovement : MonoBehaviour
         _playerRigidbody = GetComponent<Rigidbody>();
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
-        _playerInputActions.Player.Disable();
+        _playerInputActions?.Player.Disable();
+
+        base.OnDestroy();
     }
 
     private void Update()
     {
-        _playerRigidbody.linearVelocity = Vector3.zero;
-        Vector2 inputVector = _playerInputActions.Player.Move.ReadValue<Vector2>();
-        if ( inputVector == Vector2.zero ) return;
+        if ( !IsOwner )
+        {
+            return;
+        }
+        
+        _inputVector = _playerInputActions.Player.Move.ReadValue<Vector2>();
+    }
 
-        _playerRigidbody.linearVelocity = new Vector3( inputVector.x, 0, inputVector.y ) * movementSpeed;
+    private void FixedUpdate()
+    {
+        if (!IsOwner) return;
+        _playerRigidbody.linearVelocity = new Vector3(_inputVector.x, 0, _inputVector.y) * movementSpeed;
     }
 }

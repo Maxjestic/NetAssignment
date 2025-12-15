@@ -5,15 +5,14 @@ using UnityEngine.Events;
 
 public class PlayerNetworkPoints : NetworkBehaviour
 {
-    private NetworkVariable<int> _pointsVar = new(0, NetworkVariableReadPermission.Everyone,
-        NetworkVariableWritePermission.Owner);
-    public UnityAction<int> OnPointsChanged;
+    private readonly NetworkVariable<int> _pointsVar = new(0);
+    public UnityAction<int> onPointsChanged;
 
     public int Points => _pointsVar.Value;
 
-    public void CoinCollected()
+    public void AddPoint()
     {
-        if(IsOwner)
+        if (IsServer)
         {
             _pointsVar.Value += 1;
         }
@@ -35,6 +34,6 @@ public class PlayerNetworkPoints : NetworkBehaviour
 
     private void OnPointsValueChanged( int previousValue, int newValue )
     {
-        OnPointsChanged?.Invoke( newValue );
+        onPointsChanged?.Invoke( newValue );
     }
 }

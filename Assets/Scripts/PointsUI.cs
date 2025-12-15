@@ -31,7 +31,7 @@ public class PointsUI : MonoBehaviour
 
             if (playerNetworkPoints) {
                 OnPlayerPointsChanged(playerNetworkPoints.Points);
-                playerNetworkPoints.OnPointsChanged += OnPlayerPointsChanged;
+                playerNetworkPoints.onPointsChanged += OnPlayerPointsChanged;
             }
         }
     }

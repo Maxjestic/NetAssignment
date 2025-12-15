@@ -1,52 +1,23 @@
-using System;
 using TMPro;
-using Unity.Netcode;
 using UnityEngine;
 
 public class PointsUI : MonoBehaviour
 {
+    public static PointsUI Instance;
+
     public TMP_Text pointsText;
 
-    private void Start()
+    private void Awake()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+        Instance = this;
     }
 
-    private void OnDestroy()
+    public void SetTargetPlayer( PlayerNetworkPoints player )
     {
-        if ( NetworkManager.Singleton )
-        {
-            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
-        }
-    }
+        pointsText.text = player.Points.ToString();
 
-    private void OnClientConnected( ulong clientId )
-    {
-        if (IsLocalClient(clientId))
-        {
-            NetworkObject playerNetworkObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
-            PlayerNetworkPoints playerNetworkPoints = playerNetworkObject.GetComponent<PlayerNetworkPoints>();
-
-            if (playerNetworkPoints) {
-                OnPlayerPointsChanged(playerNetworkPoints.Points);
-                playerNetworkPoints.onPointsChanged += OnPlayerPointsChanged;
-            }
-        }
-    }
-
-    private void OnClientDisconnect( ulong clientId )
-    {
-        if (IsLocalClient(clientId))
-        {
-            OnPlayerPointsChanged(-1);
-        }
-    }
-    
-    private bool IsLocalClient(ulong clientId)
-    {
-        return NetworkManager.Singleton.LocalClientId == clientId;
+        player.onPointsChanged -= OnPlayerPointsChanged;
+        player.onPointsChanged += OnPlayerPointsChanged;
     }
 
     private void OnPlayerPointsChanged( int newPointsValue )

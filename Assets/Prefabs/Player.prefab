@@ -9,15 +9,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3146480501702586280}
-  - component: {fileID: 8118365021702703032}
   - component: {fileID: 2401665507637827736}
+  - component: {fileID: 8118365021702703032}
   - component: {fileID: 2600133017234229437}
   - component: {fileID: 5666118965501282646}
   - component: {fileID: -842061052622725993}
   - component: {fileID: 533341167536199150}
   - component: {fileID: 3908013299727835261}
   - component: {fileID: 3628208096314438114}
-  m_Layer: 0
+  - component: {fileID: 8891738499264674701}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,19 +41,6 @@ Transform:
   - {fileID: 8988367631052405036}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8118365021702703032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3082627624612363968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c6de685e7f6568478757b21530fa8dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 5
 --- !u!114 &2401665507637827736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +66,20 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &8118365021702703032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3082627624612363968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c6de685e7f6568478757b21530fa8dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  movementSpeed: 5
 --- !u!114 &2600133017234229437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +175,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -208,6 +210,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8891738499264674701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3082627624612363968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e49e3ee4a99683498d8af8f57e19732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &7167465722395931593
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +234,7 @@ GameObject:
   - component: {fileID: 8988367631052405036}
   - component: {fileID: 3743775411030380202}
   - component: {fileID: 3540491520832496470}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

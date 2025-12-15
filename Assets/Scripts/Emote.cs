@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -36,7 +34,7 @@ public class Emote : NetworkBehaviour
         else
         {
             GameObject emote = Instantiate( emotePrefab, transform );
-            
+
             var netObj = emote.GetComponent<NetworkObject>();
             netObj.Spawn();
             netObj.TrySetParent( transform );

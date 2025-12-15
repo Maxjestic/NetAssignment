@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 
 public class CoinMovement : MonoBehaviour
 {
-
     [SerializeField]
     private float amplitude;
 
@@ -12,8 +10,8 @@ public class CoinMovement : MonoBehaviour
 
     [SerializeField]
     private float rotationSpeed;
-    
-    private float _x = 0;
+
+    private float _x;
     private float _initialY;
 
     private void Start()
@@ -23,10 +21,10 @@ public class CoinMovement : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(Vector3.up, rotationSpeed);
-        transform.position = new Vector3(transform.position.x, _initialY + CalculateY(), transform.position.z);
+        transform.Rotate( Vector3.up, rotationSpeed );
+        transform.position = new Vector3( transform.position.x, _initialY + CalculateY(), transform.position.z );
     }
-    
+
     private float CalculateY()
     {
         _x += Time.deltaTime;

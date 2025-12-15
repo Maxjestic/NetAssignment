@@ -8,15 +8,15 @@ public class MultiplayerUI : MonoBehaviour
         NetworkManager.Singleton.StartHost();
         Hide();
     }
-    
+
     public void OnJoinClick()
     {
         NetworkManager.Singleton.StartClient();
         Hide();
     }
-    
+
     private void Hide()
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive( false );
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -33,13 +32,13 @@ public class PlayerMovement : NetworkBehaviour
         {
             return;
         }
-        
+
         _inputVector = _playerInputActions.Player.Move.ReadValue<Vector2>();
     }
 
     private void FixedUpdate()
     {
-        if (!IsOwner) return;
-        _playerRigidbody.linearVelocity = new Vector3(_inputVector.x, 0, _inputVector.y) * movementSpeed;
+        if ( !IsOwner ) return;
+        _playerRigidbody.linearVelocity = new Vector3( _inputVector.x, 0, _inputVector.y ) * movementSpeed;
     }
 }
